@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Chat message styles */
+    .message {
+        max-width: 50%;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 10px;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+    /* Sender message style */
+    .sender {
+        background-color: #f8d7da;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1000px) {
+        .sender {
+            background-color: #f8d7da;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            align-self: flex-end;
+            margin-left: auto;
+        }
+    }
+
+    /* Receiver message style */
+    .receiver {
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        color: black;
+        align-self: flex-start;
+        margin-right: auto;
+    }
+
+    /* Input field styling */
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+    }
+
+    /* Send button styling */
+    button {
+        background-color: #db0303;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    /* Hover effect for button */
+    button:hover {
+        background-color: #a50000;
+    }
+
+    .type-send {
+        display: flex;
+    }
+
+    /* Responsive heading style */
+    .responsive-header {
+        /* Adjust font size for default screen */
+        font-weight: bold;
+        color: #db0303;
+        margin-bottom: 20px;
+        text-align: center;
+        padding-bottom: 8px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+        /* Center the text */
+    }
+
+    @media (max-width: 768px) {
+        .responsive-header {
+            font-size: 20px;
+            /* Smaller screen sizes */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .responsive-header {
+            font-size: 18px;
+            /* Even smaller screens */
+        }
+    }
+</style>
+
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <main>
+            <h1 class="responsive-header">
+                <img src="../{{ staff_profile_pic }}" alt=""
+                    style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                {{ staff_full_name }}
+            </h1>
+
+
+            <!-- Chat messages container -->
+            <div id="chat-messages"
+                style="max-height: 600px; overflow-y: scroll; display: flex; flex-direction: column;">
+                {% for message in messages %}
+                <div class="message {{ 'sender' if message[0] == user_id else 'receiver' }}">
+                    <p>{{ message[2] }}</p>
+                    <small class="message-time">{{ message[3] }}</small>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Chat form -->
+            <form id="chat-form" class="type-send">
+                <textarea name="content" rows="3" cols="50" placeholder="Type your message..." required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </main>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+<!-- JavaScript for handling chat functionality -->
+<script>
+    const conversationId = {{ conversation_id }};
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const userId = {{ user_id }}; // Use the passed user_id
+
+    // Function to fetch messages and update the chat window
+    function fetchMessages() {
+        fetch(`/fetch_messages/${conversationId}`)
+            .then(response => response.json())
+            .then(data => {
+                const currentScrollTop = chatMessages.scrollTop;
+                const previousScrollHeight = chatMessages.scrollHeight;
+
+                chatMessages.innerHTML = ''; // Clear current messages
+
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message', message[0] === userId ? 'sender' : 'receiver');
+                    messageElement.innerHTML = `
+                        <p>${message[2]}</p>
+                        <small>${new Date(message[3]).toLocaleString()}</small>
+                    `;
+                    chatMessages.appendChild(messageElement);
+                });
+
+                // Check if user was at the bottom before new messages were added
+                const isScrolledToBottom = (currentScrollTop + chatMessages.clientHeight >= previousScrollHeight - 1);
+                if (isScrolledToBottom) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+                }
+            });
+    }
+
+    // Poll for new messages every 2 seconds
+    setInterval(fetchMessages, 2000);
+
+    // Handle form submission with AJAX
+    chatForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form from submitting the traditional way
+
+        const formData = new FormData(chatForm); // Collect form data
+        fetch(`/chat/{{ staff_id }}`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(() => {
+                chatForm.reset(); // Clear the form after sending the message
+                fetchMessages();  // Fetch the latest messages
+            });
+    });
+</script>
+
+{% endblock %}
+
+{#{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h1>Chat with Staff {{ staff_id }}</h1>
+
+    <!-- Chat messages container -->
+    <div id="chat-messages" style="max-height: 400px; overflow-y: scroll;">
+        {% for message in messages %}
+        <div class="message">
+            <strong>
+                {% if message[0] == session['user_id'] %}
+                You!
+                {% else %}
+                {{ message[1] }}:
+                {% endif %}
+            </strong>
+            <p>{{ message[2] }}</p>
+            <small>{{ message[3] }}</small>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Chat form -->
+    <form id="chat-form">
+        <textarea name="content" rows="3" cols="50" placeholder="Type your message..." required></textarea>
+        <button type="submit">Send</button>
+    </form>
+</main>
+
+<!-- JavaScript for handling chat functionality -->
+<script>
+    const conversationId = {{ conversation_id }};
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const userId = {{ session['user_id'] }}; // Get the logged-in user's ID
+
+    // Function to fetch messages and update the chat window
+    function fetchMessages() {
+        fetch(`/fetch_messages/${conversationId}`)
+            .then(response => response.json())
+            .then(data => {
+                chatMessages.innerHTML = ''; // Clear current messages
+                data.forEach(message => {
+                    const senderName = message[0] == userId ? 'You!' : message[1]; // Determine sender
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    messageElement.innerHTML = `
+                        <strong>${senderName}:</strong>
+                        <p>${message[2]}</p>
+                        <small>${new Date(message[3]).toLocaleString()}</small>
+                    `;
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+            });
+    }
+
+    // Poll for new messages every 2 seconds
+    setInterval(fetchMessages, 2000);
+
+    // Handle form submission with AJAX
+    chatForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form from submitting the traditional way
+
+        const formData = new FormData(chatForm); // Collect form data
+        fetch(`/chat/{{ staff_id }}`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(() => {
+                chatForm.reset(); // Clear the form after sending the message
+                fetchMessages();  // Fetch the latest messages
+            });
+    });
+</script>
+{% endblock %}#}

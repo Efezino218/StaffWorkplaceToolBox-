@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Welcome to Staff Portal</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <script src='main.js'></script>
+
+</head>
+
+<style>
+    /* General body styling */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    /* General Styling for the Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #333;
+        position: relative;
+        z-index: 999;
+    }
+
+    .brand-title {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .logo {
+        width: 50px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    .navbar-list {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+    }
+
+    .navbar-item {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 10px 15px;
+    }
+
+    .navbar-item:hover {
+        background-color: #db0303;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    /* Toggle Button for Mobile View */
+    .navbar-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 768px) {
+        .navbar {
+            justify-content: space-between;
+        }
+
+        .navbar-toggle {
+            display: inline-block;
+        }
+
+        .navbar-list {
+            position: absolute;
+            top: 60px;
+            right: -250px;
+            flex-direction: column;
+            background-color: #333;
+            width: 200px;
+            padding: 20px;
+            border-radius: 8px;
+            transition: right 0.3s ease;
+            display: none;
+        }
+
+        .navbar-list.active {
+            display: block;
+            right: 20px;
+        }
+
+        .navbar-list li {
+            margin-top: 10px;
+        }
+
+        .navbar-item {
+            padding: 10px;
+            text-align: left;
+            width: 100%;
+        }
+    }
+
+
+    /* Hero Section with Animated Background */
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: black;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .hero-overlay {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/static/img/bg1.jpg') no-repeat center center/cover;
+        animation: backgroundAnimation 15s infinite;
+        z-index: 1;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+    }
+
+    @keyframes backgroundAnimation {
+        0% {
+            background-image: url('/static/img/blog-2.jpg');
+        }
+
+        50% {
+            background-image: url('/static/img/package-2.jpg');
+        }
+
+        100% {
+            background-image: url('/static/img/hero-small2.png');
+        }
+    }
+
+    .signin-form {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin: 20px auto;
+        max-width: 400px;
+    }
+
+    .signin-form h3 {
+        color: #fff;
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .continue-btn {
+        display: inline-flex;
+        align-items: center;
+        background-color: #db0303;
+        color: #ffffff;
+        /* White text */
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .continue-btn:hover {
+        background-color: #a00000;
+        transform: translateY(-3px);
+    }
+
+    .arrow-icon {
+        margin-left: 10px;
+        animation: bounce 1s infinite;
+    }
+
+    /* Arrow bounce animation */
+    @keyframes bounce {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-5px);
+            /* Move the arrow up */
+        }
+    }
+
+
+
+    /* Features Section */
+    .features {
+        padding: 40px;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .feature-item {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-item h3 {
+        color: #db0303;
+    }
+
+
+    @media only screen and (max-width: 480px) {
+        .hero {
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="" class="brand-title">
+                    <img src="../static/img/logo.png" alt="R-Pro Group Logo" class="logo">
+                    <span class="text-white">R-Pro &nbsp; </span> Group.
+                </a>
+            </div>
+            <button class="navbar-toggle" id="navbar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="navbar-list" id="navbar-list">
+                <li><a href="{{ url_for('index') }}" class="navbar-item">Home</a></li>
+
+                {% if session.get('user_logged_in') %}
+                <!-- Only visible when user is logged in -->
+                <li><a href="{{ url_for('add_tool') }}" class="navbar-item">Add Tool</a></li>
+                <li><a href="{{ url_for('user_dashboard') }}" class="navbar-item">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}" class="navbar-item">Logout</a></li>
+                {% else %}
+                <!-- Only visible when user is NOT logged in -->
+                <li><a href="{{ url_for('show_register_form') }}" class="navbar-item navbar-signup">Sign Up</a></li>
+                <li><a href="{{ url_for('login') }}" class="navbar-item">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+
+
+
+    <main class="home-container">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">
+                <span>{{ message }}</span>
+                <button class="close-btn" onclick="this.parentElement.style.display='none';">X</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <section class="hero">
+            <div class="hero-overlay">
+                <h1>Welcome to the Staff Portal</h1>
+                <p>Seamlessly access and manage your work tools with ease.</p>
+                <p>New here? Register now or log in to start managing your tasks.</p>
+
+                <!-- Sign-in form -->
+                <div class="signin-form">
+                    <h3>Sign in to your account</h3>
+                    <a class="continue-btn" href="{{ url_for('login') }}">
+                        Continue
+                        <i class="fas fa-arrow-right arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="features">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>Access Tools</h3>
+                    <p>Manage and access all the tools you need for work in one place.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Collaborate with Staff</h3>
+                    <p>Connect and collaborate with other team members for better productivity.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Stay Updated</h3>
+                    <p>Receive real-time notifications and stay updated with the latest staff activities.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 R-pro Group. All rights reserved.</p>
+    </footer>
+
+    <script>
+        setTimeout(function () {
+            const flashMessages = document.querySelectorAll('.flash-container .flash');
+            flashMessages.forEach(flash => {
+                flash.style.display = 'none';
+            });
+        }, 15000); // 15 seconds
+
+
+        // Toggle navbar on mobile
+        const toggleButton = document.getElementById('navbar-toggle');
+        const navbarList = document.getElementById('navbar-list');
+
+        toggleButton.addEventListener('click', () => {
+            navbarList.classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

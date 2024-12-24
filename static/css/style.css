@@ -1,0 +1,330 @@
+/* ===== Flash Messages Styling====== */
+
+.flash-container {
+    position: absolute;
+    top: 10px;
+    /* Distance from the top of the viewport */
+    right: 10px;
+    /* Distance from the right side */
+    z-index: 1000;
+    /* Ensure it appears on top */
+}
+
+.flash {
+    background-color: #db0303;
+    /* Red background for error messages */
+    color: #ffffff;
+    /* White text */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    /* Distribute space between elements */
+    align-items: center;
+    position: relative;
+    /* Ensure position context for absolute elements */
+    animation: fadeIn 0.5s, fadeOut 0.5s 14.5s;
+    /* Fade in and fade out effect */
+}
+
+
+.flash-success {
+    background-color: #28a745;
+    padding-right: 30px;
+
+    /* Green background for success messages */
+}
+
+.flash-warning {
+    background-color: #ffc107;
+    /* Yellow background for warning messages */
+}
+
+.flash-error {
+    background-color: #dc3545;
+    padding-right: 30px;
+    /* Red background for error messages */
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    /* Ensure button color is visible against the background */
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 5px;
+    /* Increase padding for better click area */
+    position: absolute;
+    /* Position it absolutely within the flash container */
+    right: 10px;
+    /* Align to the right */
+    top: 40%;
+    /* Center vertically */
+    transform: translateY(-50%);
+    /* Adjust for the vertical center */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
+
+/* Modal styling to match the red color theme */
+.modal-header {
+    background-color: var(--primary-red);
+    color: var(--white);
+}
+
+.modal-title {
+    color: var(--white);
+}
+
+.btn-primary {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--lighter-red);
+    border-color: var(--lighter-red);
+}
+
+.form-control {
+    border: 1px solid var(--lighter-red);
+}
+
+/* Close button customization */
+.close {
+    color: var(--white);
+}
+
+.close:hover {
+    color: var(--lighter-red);
+}
+
+
+
+
+/* ===== Choose Login Option ==== */
+
+.device-type-options {
+    display: flex;
+    /* Use flexbox for alignment */
+    justify-content: space-around;
+    /* Space out the options evenly */
+    margin-top: 10px;
+    /* Add some spacing above the options */
+}
+
+.device-option input[type="radio"] {
+    margin-right: 5px;
+    /* Add some spacing between the radio button and label */
+}
+
+.device-option label {
+    font-weight: 500;
+    /* Optional: bold the label */
+}
+
+
+
+
+
+/* Colors */
+:root {
+    --primary-red: #db0303;
+    --lighter-red: #ff4d4d;
+    --dark-red: #9a0000;
+    --white: #fff;
+    --black: #000;
+}
+
+/* Center the Tools Header */
+h2 {
+    text-align: center;
+    color: var(--primary-red);
+}
+
+/* Align search and switch buttons to the right */
+.tools-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
+.tools-actions .btn-switch {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tools-actions .btn-switch:hover {
+    background-color: var(--lighter-red);
+}
+
+.tools-actions .search-input {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid var(--lighter-red);
+    margin-right: 10px;
+}
+
+.tools-actions .btn-search {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.tools-actions .btn-search:hover {
+    background-color: var(--primary-red);
+}
+
+/* Table styling */
+.table.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--black);
+}
+
+.table.custom-table th {
+    padding: 12px;
+    text-align: left;
+    font-size: 18px;
+}
+
+.table.custom-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--lighter-red);
+}
+
+/* New styles for file name column */
+.table.custom-table td.file-name {
+    max-width: 200px;
+    /* Set a maximum width for the file name column */
+    overflow: hidden;
+    /* Hide overflowed content */
+    text-overflow: ellipsis;
+    /* Show ellipsis (...) for overflowed content */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+
+/* Buttons */
+.table.custom-table .btn-open {
+    background-color: var(--primary-red);
+    color: var(--white);
+    padding: 6px 12px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.table.custom-table .btn-open:hover {
+    background-color: var(--lighter-red);
+}
+
+.table.custom-table .dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: var(--dark-red);
+    cursor: pointer;
+}
+
+.table.custom-table .dropdown-menu {
+    background-color: var(--white);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table.custom-table .dropdown-item {
+    color: var(--black);
+    padding: 10px 20px;
+}
+
+.table.custom-table .dropdown-item:hover {
+    background-color: var(--lighter-red);
+    color: var(--white);
+}
+
+/* Scrollable table */
+.table-responsive.custom-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    /* Gives the "gutter" feel */
+    border: 1px solid var(--lighter-red);
+    padding: 0;
+    margin-top: 10px;
+}
+
+/* Custom scrollbars */
+.table-responsive.custom-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-responsive.custom-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--primary-red);
+    border-radius: 4px;
+}
+
+/* Hover effect for rows */
+.table.custom-table tbody tr:hover {
+    background-color: #9b97977a;
+    color: var(--white);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tools-actions {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .tools-actions .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn-search {
+        margin-bottom: 10px;
+    }
+
+    .tools-actions .btn-switch {
+        width: 100%;
+    }
+
+    /* Adjust max width for mobile */
+    .table.custom-table td.file-name {
+        max-width: 100%;
+        /* Set to 100% for smaller screens */
+        white-space: normal;
+        /* Allow text to wrap on small screens */
+    }
+}

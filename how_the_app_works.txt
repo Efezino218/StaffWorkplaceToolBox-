@@ -1,0 +1,47 @@
+[ Local Tools Upload App Documentation
+Purpose of the App ]
+The purpose of this app is to allow staff members to easily add and manage their local tools 
+(such as files like images, PDFs, and documents) and online tools (such as websites or platforms like Titan, Canva, GPT, etc.). 
+By using this app, staff can access all their tools from anywhere, making their work more organized and efficient.
+
+
+[ Steps We Follow ]
+1. Login as Staff
+Only staff members can use this app.
+You need to log in with your credentials to access the dashboard.
+2. Add Local Tool
+Once logged in, go to the "User Dashboard."
+Click on the "Add Local Tool" button.
+A form will pop up where you can choose a file from your computer to upload.
+3. Upload File
+Select the file you want to upload (it can be an image, document, PDF, etc.).
+Click on the "Upload Local Tool" button.
+The file will be saved and stored in the system.
+4. View Uploaded Tools
+After uploading, you will see a table listing all your tools.
+Each tool will show:
+File Name
+File Type (e.g., PDF, Image, Word Document)
+Preview (for image files)
+Action Buttons:
+Open the file.
+Delete the file if necessary.
+
+
+
+
+[ How It Works ]
+File Validation
+The app checks the file type to ensure only allowed files (like images, PDFs, Word documents) are uploaded.
+Uploading the File
+The file is saved in the server’s static/uploads folder.
+Saving to the Database
+Details about the file, like its name, type, and location, are saved in the database to keep track of the tools.
+Displaying the Tools
+All the uploaded tools are shown in the dashboard for easy access. You can manage your files directly from here.
+
+
+[ Why This App is Important ]
+Access Anywhere: Staff can upload and access their tools from any device with internet access.
+Organized Tools: All your tools are stored in one place, making it easy to find and manage them.
+Secure Storage: Tools are securely stored and tracked in the database, ensuring everything is safe and easy to manage.

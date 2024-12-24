@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
+        type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <main class="">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">
+                <span>{{ message }}</span>
+                <button class="close-btn" onclick="this.parentElement.style.display='none';">X</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="container">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                        <div class="col-lg-7">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Register as a Staff</h1>
+                                </div>
+                                <form class="user" action="{{ url_for('show_register_form') }}" method="POST">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="text" class="form-control form-control-user" id="full_name"
+                                                name="full_name" value="{{ request.form.get('full_name', '') }}"
+                                                placeholder="Full Name" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control form-control-user" id="username"
+                                                name="username" value="{{ request.form.get('username', '') }}"
+                                                placeholder="Username" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" name="email"
+                                            placeholder="Email" value="{{ request.form.get('email', '') }}" required>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="text" class="form-control form-control-user" id="department"
+                                                name="department" value="{{ request.form.get('department', '') }}"
+                                                placeholder="Department" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control form-control-user" id="position"
+                                                name="position" value="{{ request.form.get('position', '') }}"
+                                                placeholder="Position" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="branch"
+                                            placeholder="Branch" value="{{ request.form.get('branch', '') }}" required>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="password" class="form-control form-control-user" id="password"
+                                                name="password" placeholder="Password" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">Register
+                                        Account</button>
+                                    <hr>
+                                    {#<a href="index.html" class="btn btn-google btn-user btn-block">
+                                        <i class="fab fa-google fa-fw"></i> Register with Google
+                                    </a>#}
+                                    {#<a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                        <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                    </a>#}
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="{{ url_for('forgot_password') }}">forgot your password</a>
+                                </div>
+                                <div class="text-center">OR</div>
+                                <div class="text-center">
+                                    <a class="small" href="{{ url_for('login') }}">Already have an account? Login
+                                        here</a>
+                                </div>
+                                <p style="text-align: center;"><a href="{{ url_for('index') }}">Back to Home</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+    <script>
+        setTimeout(function () {
+            const flashMessages = document.querySelectorAll('.flash-container .flash');
+            flashMessages.forEach(flash => {
+                flash.style.display = 'none';
+            });
+        }, 15000); // 15 seconds
+    </script>
+
+    {#<h2>Register as a Staff</h2>
+    <form action="{{ url_for('show_register_form') }}" method="POST">
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" value="{{ request.form.get('full_name', '') }}" required>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="{{ request.form.get('username', '') }}" required>
+
+        <label for="Email">Email:</label>
+        <input type="email" name="email" placeholder="Email" value="{{ request.form.get('email', '') }}" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" value="{{ request.form.get('department', '') }}" required>
+
+        <label for="position">Position:</label>
+        <input type="text" id="position" name="position" value="{{ request.form.get('position', '') }}" required>
+
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" value="{{ request.form.get('branch', '') }}" required>
+
+        <button type="submit">Register</button>
+    </form>
+    <p class="small mb-0">Already registered? <a href="{{ url_for('login') }}">Login here</a> or
+        <a href="{{ url_for('forgot_password') }}">forgot your password</a>
+    </p>#}
+</body>
+
+</html>

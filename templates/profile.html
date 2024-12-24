@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<main>
+
+    <h2>Update Your Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" value="{{ staff[0] }}" required><br>
+
+        <label for="branch">Branch</label>
+        <input type="text" name="branch" id="branch" value="{{ staff[1] }}" required><br>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="{{ staff[2] }}" required><br>
+
+        <label for="password">New Password (leave blank if you don't want to change)</label>
+        <input type="password" name="password" id="password"><br>
+
+        <label for="description">Description</label>
+        <textarea name="description" id="description">{{ staff[3] }}</textarea><br>
+
+        <label for="profile_pic">Profile Picture</label>
+        <input type="file" name="profile_pic" id="profile_pic"><br>
+
+        {% if staff[4] %}
+        <img src="{{ url_for('static', filename=staff[12]) }}" alt="Profile Picture" width="100"><br>
+        {% endif %}
+
+        <input type="submit" value="Update Profile">
+    </form>
+</main>
+{% endblock %}

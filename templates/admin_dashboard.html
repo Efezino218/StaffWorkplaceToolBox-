@@ -1,0 +1,48 @@
+{% extends 'admin_base.html' %}
+
+
+{% block title %}
+<title>Admin Dashboard</title>
+{% endblock %}
+
+
+{% block content %}
+
+
+<main>
+
+    <h1>Admin Dashboard</h1>
+    <h2>Pending Approvals</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Branch</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in pending_staff %}
+            <tr>
+                <td>{{ staff.full_name }}</td>
+                <td>{{ staff.username }}</td>
+                <td>{{ staff.department }}</td>
+                <td>{{ staff.position }}</td>
+                <td>{{ staff.branch }}</td>
+                <td>
+                    <form action="{{ url_for('approve_staff', staff_id=staff.id) }}" method="POST">
+                        <input type="text" name="staff_number" placeholder="Staff Number" required>
+                        <button type="submit">Approve</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+
+{% endblock %}

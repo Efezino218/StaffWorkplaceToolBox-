@@ -1,0 +1,18 @@
+<form method="POST">
+    <div class="form-group">
+        <label for="name">Tool Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ tool[1] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="url">Tool URL</label>
+        <input type="url" class="form-control" id="url" name="url" value="{{ tool[2] }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Tool</button>
+</form>
+
+
+<!-- INSERT INTO tools (name, url, logo_url)
+VALUES 
+('Slack', 'https://slack.com', '/static/img/slack.png'),
+('WhatsApp', 'https://web.whatsapp.com', '/static/img/whatsapp.png'),
+('Titan', 'https://titan.email', '/static/img/titan.png'); -->
